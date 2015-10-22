@@ -68,7 +68,7 @@ function Lexer(defunct) {
                     var token = match.action.apply(this, result);
                     if (this.reject) this.index = result.index;
                     else if (typeof token !== "undefined") {
-                    	tkns.push(token);
+                    	tkns = tkns.concat(token);
                     }
                 } else break;
             }
@@ -80,7 +80,7 @@ function Lexer(defunct) {
                     remove = 0;
                     var token = defunct.call(this, input.charAt(this.index++));
                     if (typeof token !== "undefined") {
-                    	tkns.push(token);
+                    	tkns = tkns.concat(token);
                     }
                 } else {
                     if (this.index !== index) remove = 0;
