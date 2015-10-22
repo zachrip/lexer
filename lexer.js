@@ -50,6 +50,8 @@ function Lexer(defunct) {
 
         this.reject = true;
 
+        var tkns = [];
+
         while (this.index <= this.input.length) {
             var matches = scan.call(this).splice(remove);
             var index = this.index;
@@ -66,14 +68,7 @@ function Lexer(defunct) {
                     var token = match.action.apply(this, result);
                     if (this.reject) this.index = result.index;
                     else if (typeof token !== "undefined") {
-                        switch (Object.prototype.toString.call(token)) {
-                        case "[object Array]":
-                            tokens = token.slice(1);
-                            token = token[0];
-                        default:
-                            if (length) remove = 0;
-                            return token;
-                        }
+                    	tkns.push(token);
                     }
                 } else break;
             }
@@ -85,10 +80,7 @@ function Lexer(defunct) {
                     remove = 0;
                     var token = defunct.call(this, input.charAt(this.index++));
                     if (typeof token !== "undefined") {
-                        if (Object.prototype.toString.call(token) === "[object Array]") {
-                            tokens = token.slice(1);
-                            return token[0];
-                        } else return token;
+                    	tkns.push(token);
                     }
                 } else {
                     if (this.index !== index) remove = 0;
