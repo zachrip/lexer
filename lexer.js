@@ -90,6 +90,8 @@ function Lexer(defunct) {
                 this.reject = true;
             else break;
         }
+
+        return tkns;
     };
 
     function scan() {
